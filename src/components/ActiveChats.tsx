@@ -1,22 +1,29 @@
 import { Box } from "@mui/material";
 import ActiveChatCard from "./ActiveChatCard";
+import { Dispatch } from "react";
 
 const SAMPLE_DATA = [
   {
+    id: 0,
     botPic: "./M-DAQ.svg",
     name: "M-DAQ Bot",
   },
   {
+    id: 1,
     botPic: "./Envisor.svg",
     name: "Ensivor Bot",
   },
   {
+    id: 2,
     botPic: "./Shenel.svg",
     name: "Shenel Bot",
   },
 ];
+export type ActiveChatProps = {
+  setCurrentChat: Dispatch<number>;
+};
 
-export default function ActiveChats() {
+export default function ActiveChats(props: ActiveChatProps) {
   return (
     <>
       <Box

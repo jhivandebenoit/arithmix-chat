@@ -19,6 +19,9 @@ export default function ActiveChatCard(props: ChatCardProps) {
         },
         borderRadius: "0.5rem",
         justifyContent: "flex-start",
+        "&:focus": {
+          backgroundColor: "#EDEDED",
+        },
       }}
     >
       <Box

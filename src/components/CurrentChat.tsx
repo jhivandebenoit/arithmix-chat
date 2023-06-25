@@ -1,21 +1,61 @@
-import { Box, TextField, Card, Button } from "@mui/material";
+import { Box, TextField, Button } from "@mui/material";
 import ChatCard from "./ChatCard";
 import { useState } from "react";
 
 const SAMPLE_DATA = [
   {
+    id: 0,
     profilePic: "./person.svg",
-    text: "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
+    botPic: "./M-DAQ.svg",
+    messages: [
+      {
+        type: 0,
+        text: "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
+      },
+      {
+        type: 1,
+        text: "Lorem ipsum, or lipsum ",
+      },
+    ],
   },
   {
-    profilePic: "./M-DAQ.svg",
-    text: "Lorem ipsum, or lipsum ",
+    id: 1,
+    profilePic: "./person.svg",
+    botPic: "./envisor.svg",
+    messages: [
+      {
+        type: 0,
+        text: "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
+      },
+      {
+        type: 1,
+        text: "Lorem ipsum, or lipsum ",
+      },
+    ],
   },
 ];
 
-export default function CurrentChat() {
+type Conversation = {
+  id: number;
+  profilePic: string;
+  botPic: string;
+  messages: Message[];
+};
+
+type Message = {
+  type: number;
+  text: string;
+};
+
+export type CurrentChatProps = {
+  currentChat: number;
+};
+
+export default function CurrentChat(props: CurrentChatProps) {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState(SAMPLE_DATA);
+  const [conversations, setConversations] = useState<Conversation[]>(SAMPLE_DATA);
+  const [currentConversation, setCurrentConversation] = useState<Conversation>(conversations[props.currentChat]);
+
   return (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <Box
@@ -41,9 +81,15 @@ export default function CurrentChat() {
           overflowY: "auto",
         }}
       >
-        {messages.map((m) => (
-          <ChatCard text={m.text} profilePic={m.profilePic} />
-        ))}
+        {conversations[props.currentChat].messages.map((m) => {
+          let pic = "";
+          if (m.type == 0) {
+            pic = conversations[props.currentChat].profilePic;
+          } else {
+            pic = conversations[props.currentChat].botPic;
+          }
+          return <ChatCard text={m.text} profilePic={pic} />;
+        })}
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: "auto", mb: "2rem", mx: 4 }}>
         <TextField
@@ -58,7 +104,6 @@ export default function CurrentChat() {
           variant="outlined"
           onClick={() => {
             if (message.trim().length != 0) {
-              setMessages([...messages, { text: message, profilePic: "./person.svg" }]);
               setMessage("");
             }
           }}
