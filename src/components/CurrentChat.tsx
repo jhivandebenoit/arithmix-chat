@@ -2,6 +2,7 @@ import { Box, TextField, Button, InputBase } from "@mui/material";
 import ChatCard from "./ChatCard";
 import { useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
+import { BorderStyle } from "@mui/icons-material";
 
 const SAMPLE_DATA = [
   {
@@ -131,12 +132,13 @@ export default function CurrentChat(props: CurrentChatProps) {
           mb: "2rem",
           mx: 4,
           borderRadius: 2,
-          border: "#EDEDED solid .125rem",
+          border: "#EDEDED solid .1rem",
           px: 2,
           py: 1,
           "&:hover": {
-            border: "#0500FF solid .125rem ",
-            opacity: 1,
+            borderColor: "primary.main",
+            borderStyle: "solid",
+            borderWidth: ".1rem",
           },
         }}
       >
@@ -155,8 +157,8 @@ export default function CurrentChat(props: CurrentChatProps) {
               setMessage("");
             }
           }}
+          disabled={message.length == 0}
         >
-          {/* TODO: Make button disable when no text available */}
           <SendIcon />
         </Button>
       </Box>

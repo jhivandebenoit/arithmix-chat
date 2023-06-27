@@ -46,7 +46,7 @@ export default function ActiveChats(props: ActiveChatProps) {
         }}
       >
         <Box sx={{ mb: 1, mt: 1.5 }}>Active Chats</Box>
-        <AddBoxRoundedIcon sx={{ mt: 1, mr: 1 }} fontSize="large" />
+        <AddBoxRoundedIcon sx={{ mt: 1, mr: 1 }} color="primary" fontSize="large" />
       </Box>
       <Box sx={{ width: "100%", maxWidth: 360 }}>
         <List>
