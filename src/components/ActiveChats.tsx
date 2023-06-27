@@ -3,7 +3,7 @@ import { Dispatch } from "react";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import AddIcon from "@mui/icons-material/Add";
+import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 
 const SAMPLE_DATA = [
   {
@@ -23,7 +23,6 @@ const SAMPLE_DATA = [
   },
 ];
 
-// TODO: Take data from this
 export type ActiveChatProps = {
   setCurrentChat: Dispatch<number>;
   currentChat: number;
@@ -46,49 +45,25 @@ export default function ActiveChats(props: ActiveChatProps) {
           fontSize: "1.5rem",
         }}
       >
-        <Box sx={{ mt: 1 }}>Active Chats</Box>
-        <Box sx={{ pr: 2 }}>
-          <img src="./plus.svg" />
-        </Box>
+        <Box sx={{ mb: 1, mt: 1.5 }}>Active Chats</Box>
+        <AddBoxRoundedIcon sx={{ mt: 1, mr: 1 }} fontSize="large" />
       </Box>
-      {/* <Box sx={{ display: "flex", flexDirection: "column" }}>
-       
-        <ActiveChatCard data={SAMPLE_DATA[1]} />
-        <ActiveChatCard data={SAMPLE_DATA[2]} />
-      </Box> */}
       <Box sx={{ width: "100%", maxWidth: 360 }}>
         <List>
-          <ListItemButton
-            sx={{ my: 3, mx: 2, borderRadius: 2 }}
-            selected={props.currentChat === 0}
-            onClick={(event) => handleListItemClick(event, 0)}
-          >
-            <ListItemIcon>
-              <img src="./M-DAQ.svg"></img>
-            </ListItemIcon>
-            <ListItemText primary="M-DAQ Bot" />
-          </ListItemButton>
-
-          <ListItemButton
-            sx={{ my: 3, mx: 2, borderRadius: 2 }}
-            selected={props.currentChat === 1}
-            onClick={(event) => handleListItemClick(event, 1)}
-          >
-            <ListItemIcon>
-              <img src="./Envisor.svg"></img>
-            </ListItemIcon>
-            <ListItemText primary="Envisor Bot" />
-          </ListItemButton>
-          <ListItemButton
-            sx={{ my: 3, mx: 2, borderRadius: 2 }}
-            selected={props.currentChat === 2}
-            onClick={(event) => handleListItemClick(event, 2)}
-          >
-            <ListItemIcon>
-              <img src="./Shenel.svg"></img>
-            </ListItemIcon>
-            <ListItemText primary="Shenel bot" />
-          </ListItemButton>
+          {SAMPLE_DATA.map((m, i) => {
+            return (
+              <ListItemButton
+                sx={{ my: 3, mx: 2, borderRadius: 2 }}
+                selected={props.currentChat === i}
+                onClick={(event) => handleListItemClick(event, i)}
+              >
+                <ListItemIcon>
+                  <img src={m.botPic}></img>
+                </ListItemIcon>
+                <ListItemText primary={m.name} />
+              </ListItemButton>
+            );
+          })}
         </List>
       </Box>
     </>
