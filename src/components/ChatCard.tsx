@@ -17,7 +17,7 @@ export default function ChatCard(props: ChatCardProps) {
         justifyContent: "flex-start",
       }}
     >
-      <Box sx={{ px: 1 }}>
+      <Box sx={{ pr: 1, mr: 1 }}>
         <img src={props.profilePic} />
       </Box>
       <Box>{props.text}</Box>

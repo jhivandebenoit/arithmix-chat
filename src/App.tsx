@@ -10,7 +10,7 @@ function App() {
     <>
       <Grid container columns={15} sx={{ height: "100vh" }}>
         <Grid item xs={3} sx={{ background: "#F9F9F9" }}>
-          <ActiveChats setCurrentChat={setCurrentTab} />
+          <ActiveChats currentChat={currentTab} setCurrentChat={setCurrentTab} />
         </Grid>
         <Grid item xs={12}>
           <CurrentChat currentChat={currentTab} />

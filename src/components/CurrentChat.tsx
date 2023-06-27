@@ -1,6 +1,7 @@
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, InputBase } from "@mui/material";
 import ChatCard from "./ChatCard";
 import { useState } from "react";
+import SendIcon from "@mui/icons-material/Send";
 
 const SAMPLE_DATA = [
   {
@@ -21,11 +22,42 @@ const SAMPLE_DATA = [
   {
     id: 1,
     profilePic: "./person.svg",
-    botPic: "./envisor.svg",
+    botPic: "./Envisor.svg",
     messages: [
       {
         type: 0,
-        text: "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
+        text: " unknown typesetter in the 15th century who is thought to have scrambled men book. It usually begins with:",
+      },
+      {
+        type: 1,
+        text: "Lorem ipsum, or lipsum ",
+      },
+      {
+        type: 0,
+        text: " unknown typeho is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
+      },
+      {
+        type: 1,
+        text: "Lorem ipsum, or lipsum ",
+      },
+    ],
+  },
+  {
+    id: 2,
+    profilePic: "./person.svg",
+    botPic: "./Shenel.svg",
+    messages: [
+      {
+        type: 0,
+        text: " unknown typesetter in the 15th century who is thought to have scrambled men book. It usually begins with:",
+      },
+      {
+        type: 1,
+        text: "Lorem ipsum, or lipsum ",
+      },
+      {
+        type: 0,
+        text: " unknown typeho is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
       },
       {
         type: 1,
@@ -55,7 +87,6 @@ export default function CurrentChat(props: CurrentChatProps) {
   const [message, setMessage] = useState("");
   const [conversations, setConversations] = useState<Conversation[]>(SAMPLE_DATA);
   const [currentConversation, setCurrentConversation] = useState<Conversation>(conversations[props.currentChat]);
-
   return (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <Box
@@ -73,8 +104,9 @@ export default function CurrentChat(props: CurrentChatProps) {
         <Box sx={{ pr: 2 }}>
           <img src="./person.svg" />
         </Box>
-        <Box> John doe</Box>
+        <Box sx={{ mt: 1 }}> John doe</Box>
       </Box>
+      {/* TODO: FIX THIS */}
       <Box
         sx={{
           maxHeight: "46rem",
@@ -91,24 +123,41 @@ export default function CurrentChat(props: CurrentChatProps) {
           return <ChatCard text={m.text} profilePic={pic} />;
         })}
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "space-between", mt: "auto", mb: "2rem", mx: 4 }}>
-        <TextField
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          mt: "auto",
+          mb: "2rem",
+          mx: 4,
+          borderRadius: 2,
+          border: "#EDEDED solid .125rem",
+          px: 2,
+          py: 1,
+          "&:hover": {
+            border: "#0500FF solid .125rem ",
+            opacity: 1,
+          },
+        }}
+      >
+        <InputBase
+          placeholder="Send a message"
           fullWidth
           value={message}
           onChange={(e) => {
             setMessage(e.target.value);
           }}
-          variant="outlined"
         />
         <Button
-          variant="outlined"
+          variant="text"
           onClick={() => {
             if (message.trim().length != 0) {
               setMessage("");
             }
           }}
         >
-          Send
+          {/* TODO: Make button disable when no text available */}
+          <SendIcon />
         </Button>
       </Box>
     </Box>
