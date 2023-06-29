@@ -1,93 +1,19 @@
-import { Box, TextField, Button, InputBase } from "@mui/material";
+import { Box, Button, InputBase } from "@mui/material";
 import ChatCard from "./ChatCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
-import { BorderStyle } from "@mui/icons-material";
-
-const SAMPLE_DATA = [
-  {
-    id: 0,
-    profilePic: "./person.svg",
-    botPic: "./M-DAQ.svg",
-    messages: [
-      {
-        type: 0,
-        text: "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
-      },
-      {
-        type: 1,
-        text: "Lorem ipsum, or lipsum ",
-      },
-    ],
-  },
-  {
-    id: 1,
-    profilePic: "./person.svg",
-    botPic: "./Envisor.svg",
-    messages: [
-      {
-        type: 0,
-        text: " unknown typesetter in the 15th century who is thought to have scrambled men book. It usually begins with:",
-      },
-      {
-        type: 1,
-        text: "Lorem ipsum, or lipsum ",
-      },
-      {
-        type: 0,
-        text: " unknown typeho is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
-      },
-      {
-        type: 1,
-        text: "Lorem ipsum, or lipsum ",
-      },
-    ],
-  },
-  {
-    id: 2,
-    profilePic: "./person.svg",
-    botPic: "./Shenel.svg",
-    messages: [
-      {
-        type: 0,
-        text: " unknown typesetter in the 15th century who is thought to have scrambled men book. It usually begins with:",
-      },
-      {
-        type: 1,
-        text: "Lorem ipsum, or lipsum ",
-      },
-      {
-        type: 0,
-        text: " unknown typeho is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
-      },
-      {
-        type: 1,
-        text: "Lorem ipsum, or lipsum ",
-      },
-    ],
-  },
-];
-
-type Conversation = {
-  id: number;
-  profilePic: string;
-  botPic: string;
-  messages: Message[];
-};
-
-type Message = {
-  type: number;
-  text: string;
-};
+import { Conversation, Message } from "./types";
 
 export type CurrentChatProps = {
-  currentChat: number;
+  currentTab: number;
+  currentConversation: Conversation;
+  conversations: Conversation[];
+  setCurrentConversation: React.Dispatch<React.SetStateAction<Conversation>>;
+  setConversations: React.Dispatch<React.SetStateAction<Conversation[]>>;
 };
 
 export default function CurrentChat(props: CurrentChatProps) {
   const [message, setMessage] = useState("");
-  const [conversations, setConversations] = useState<Conversation[]>(SAMPLE_DATA);
-  const [currentConversation, setCurrentConversation] = useState<Conversation>(conversations[props.currentChat]);
   return (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <Box
@@ -114,12 +40,12 @@ export default function CurrentChat(props: CurrentChatProps) {
           overflowY: "auto",
         }}
       >
-        {conversations[props.currentChat].messages.map((m) => {
+        {props.currentConversation.messages.map((m) => {
           let pic = "";
           if (m.type == 0) {
-            pic = conversations[props.currentChat].profilePic;
+            pic = props.conversations[props.currentTab].profilePic;
           } else {
-            pic = conversations[props.currentChat].botPic;
+            pic = props.conversations[props.currentTab].botPic;
           }
           return <ChatCard text={m.text} profilePic={pic} />;
         })}
@@ -154,6 +80,9 @@ export default function CurrentChat(props: CurrentChatProps) {
           variant="text"
           onClick={() => {
             if (message.trim().length != 0) {
+              props.setCurrentConversation((prevConversation) => {
+                return { ...prevConversation, messages: [...prevConversation.messages, { type: 0, text: message }] };
+              });
               setMessage("");
             }
           }}
