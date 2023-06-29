@@ -1,8 +1,8 @@
 import { Box, Button, InputBase } from "@mui/material";
 import ChatCard from "./ChatCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
-import { Conversation, Message } from "./types";
+import { Conversation } from "./types";
 
 export type CurrentChatProps = {
   currentTab: number;
@@ -14,6 +14,15 @@ export type CurrentChatProps = {
 
 export default function CurrentChat(props: CurrentChatProps) {
   const [message, setMessage] = useState("");
+  const handleChatInput = () => {
+    if (message.trim().length != 0) {
+      props.setCurrentConversation((prevConversation) => {
+        return { ...prevConversation, messages: [...prevConversation.messages, { type: 0, text: message }] };
+      });
+      setMessage("");
+    }
+  };
+
   return (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <Box
@@ -33,7 +42,6 @@ export default function CurrentChat(props: CurrentChatProps) {
         </Box>
         <Box sx={{ mt: 1 }}> John doe</Box>
       </Box>
-      {/* TODO: FIX THIS */}
       <Box
         sx={{
           maxHeight: "46rem",
@@ -75,19 +83,13 @@ export default function CurrentChat(props: CurrentChatProps) {
           onChange={(e) => {
             setMessage(e.target.value);
           }}
-        />
-        <Button
-          variant="text"
-          onClick={() => {
-            if (message.trim().length != 0) {
-              props.setCurrentConversation((prevConversation) => {
-                return { ...prevConversation, messages: [...prevConversation.messages, { type: 0, text: message }] };
-              });
-              setMessage("");
+          onKeyDown={(e) => {
+            if (!e.ctrlKey && e.key == "Enter") {
+              handleChatInput();
             }
           }}
-          disabled={message.length == 0}
-        >
+        />
+        <Button variant="text" onClick={handleChatInput} disabled={message.length == 0}>
           <SendIcon />
         </Button>
       </Box>

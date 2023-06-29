@@ -4,7 +4,7 @@ import ActiveChats from "./components/ActiveChats";
 import CurrentChat from "./components/CurrentChat";
 import { useState, useEffect } from "react";
 import SAMPLE_DATA from "./components/SampleData";
-import { Message, Conversation } from "./components/types";
+import { Conversation } from "./components/types";
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -22,7 +22,9 @@ function App() {
 
   useEffect(() => {
     setConversations((prevConversations) => {
-      return [...prevConversations, currentConversation];
+      let temp = [...prevConversations];
+      temp[currentConversation.id] = currentConversation;
+      return temp;
     });
     setCurrentConversation(conversations[currentTab]);
   }, [currentTab]);
